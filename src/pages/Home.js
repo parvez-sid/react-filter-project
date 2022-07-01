@@ -80,42 +80,43 @@ const Home = () => {
         }
     ];
 
-    const filterItems = (event) => {
-        const filter = event.target.textContent;
-        const filteredItems = dataItems.filter((item) => item.type === filter);
-        renderHtml(filteredItems, false);
-    };
+    // const filterItems = (event) => {
+    //     const filter = event.target.textContent;
+    //     const filteredItems = dataItems.filter((item) => item.type === filter);
+    //     renderHtml(filteredItems, false);
+    // };
       
-    const renderHtml = (data = [], renderInitial= false) => {
-        let renderedHtml = "";
-        const items = renderInitial ? dataItems :data ;
-        for (let item of items) {
-          renderedHtml += `<div className="col-10 col-sm-6 col-lg-4 mx-auto my-3 store-item ${item.type}" data-item="${item.type}">
-            <div className="card ">
-              <div className="img-container">
-                <img src="../assets/img/${item.image}" className="card-img-top store-img" alt="">
-                <span className="store-item-icon" onclick="addtoCart(${item.price})">
-                  <i className="fas fa-shopping-cart"></i>
-                </span>
-              </div>
-              <div className="card-body">
-                <div className="card-text d-flex justify-content-between text-capitalize">
-                  <h5 id="store-item-name">${item.title}</h5>
-                  <h5 className="store-item-value">$ <strong id="store-item-price" className="font-weight-bold">${item.price}</strong></h5>
-                </div>
-              </div>
-            </div>
-          </div>`;
-        }
-        document.getElementById("store-items").innerHTML = renderedHtml;
-    }
+    // const renderHtml = (data = [], renderInitial= false) => {
+    //     let renderedHtml = "";
+    //     const items = renderInitial ? dataItems :data ;
+    //     for (let item of items) {
+    //       renderedHtml += `<div className="col-10 col-sm-6 col-lg-4 mx-auto my-3 store-item ${item.type}" data-item="${item.type}">
+    //         <div className="card ">
+    //           <div className="img-container">
+    //             <img src="../assets/img/${item.image}" className="card-img-top store-img" alt="">
+    //             <span className="store-item-icon" onclick="addtoCart(${item.price})">
+    //               <i className="fas fa-shopping-cart"></i>
+    //             </span>
+    //           </div>
+    //           <div className="card-body">
+    //             <div className="card-text d-flex justify-content-between text-capitalize">
+    //               <h5 id="store-item-name">${item.title}</h5>
+    //               <h5 className="store-item-value">$ <strong id="store-item-price" className="font-weight-bold">${item.price}</strong></h5>
+    //             </div>
+    //           </div>
+    //         </div>
+    //       </div>`;
+    //     }
+    //     document.getElementById("store-items").innerHTML = renderedHtml;
+    // }
     ;
     return(
         <>
           <Header />
           <Banner />
           <About />
-          <Products filterItems={filterItems} renderHtml={renderHtml} />
+          {/* <Products filterItems={filterItems} renderHtml={renderHtml} /> */}
+          <Products dataItems={dataItems} />
         </>
     )
 }

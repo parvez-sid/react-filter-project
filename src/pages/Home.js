@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import Banner from "../components/Banner";
 import About from "./About";
 import Products from "./Products";
+import Swal from 'sweetalert2';
 
 const dataItems = [
   {
@@ -90,7 +91,9 @@ const dataItems = [
     price: 15,
   }
 ];
+
 let cartItems = []
+
 const Home = () => {
     const [items, setItems] = useState([]);
     const [cartCount, setCartCount] = useState(0);
@@ -115,10 +118,11 @@ const Home = () => {
         value.toLowerCase().trim();
 
         if(value === "") {
-          alert('Please write something to search...')
+          sweetErrAlert('Please write something to search...', 'Ok')
         }
 
         let filteredItems = dataItems.filter((item) => item.type.includes(value));
+        if(filteredItems.length === 0) {sweetErrAlert('No items to show with this keyword!', 'Ok')}
         setItems(filteredItems)
     }
 
@@ -139,6 +143,14 @@ const Home = () => {
       displayCart: displayCartPrice
     }
 
+    const sweetErrAlert = (errText, cnfText) => {
+      Swal.fire({
+        title: 'Error!',
+        text: errText,
+        icon: 'error',
+        confirmButtonText: cnfText
+      })
+    }
     return(
         <>
           <Header cartData={cartData} />

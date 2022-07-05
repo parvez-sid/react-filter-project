@@ -127,16 +127,16 @@ const Home = () => {
       setCartCount(cartItems.length)
     }
 
-    const displayCartItems = () => {
+    const displayCartPrice = () => {
       let totalPrice = cartItems.reduce((curr, price) => {
          return curr + price
       },0)
       return totalPrice
-     }
+    }
      
     const cartData = {
       count : cartCount,
-      displayCart: displayCartItems
+      displayCart: displayCartPrice
     }
 
     return(

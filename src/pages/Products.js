@@ -53,7 +53,7 @@ import React from "react";
                     <div className="input-group-prepend" style={{cursor : "pointer"}} onClick={() => {searchItems()}} >
                       <span className="input-group-text search-box" id="search-icon"><i className="fas fa-search"></i></span>
                     </div>
-                    <input type="text" className="form-control" placeholder='item....' id="search-item" onKeyUp={(e) => {searchItems(e)}} />
+                    <input type="text" className="form-control" placeholder='item....' id="search-item" />
                   </div>
                 </form>
               </div>

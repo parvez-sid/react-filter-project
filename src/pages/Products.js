@@ -1,6 +1,6 @@
 import React from "react";
 
-    const Products = ({dataItems, filterItems, searchItems}) => {
+    const Products = ({uniqueItems, dataItems, filterItems, searchItems, addToCart}) => {
 
     const renderItems = () => {
       return (
@@ -10,7 +10,7 @@ import React from "react";
               <div className="card ">
                   <div className="img-container">
                   <img src={require(`../assets/img/${item.image}`)} className="card-img-top store-img" alt="" />
-                  <span className="store-item-icon">
+                  <span className="store-item-icon" onClick={() => {addToCart(item.price)}}>
                       <i className="fas fa-shopping-cart"></i>
                   </span>
                   </div>
@@ -26,6 +26,7 @@ import React from "react";
         })
       )
     }
+    
     return(
         <section id="store" className="store py-5">
           <div className="container">
@@ -36,11 +37,12 @@ import React from "react";
             </div>
             <div className="row">
               <div className=" col-lg-8 mx-auto d-flex justify-content-around my-2 sortBtn flex-wrap">
-                <a href="#" className="btn btn-outline-secondary btn-black text-uppercase filter-btn m-2" data-filter="all" onClick={(e) => {filterItems(e)}}> all</a>
-                <a href="#" className="btn btn-outline-secondary btn-black text-uppercase filter-btn m-2" data-filter="cakes" onClick={(e) => {filterItems(e)}}>cakes</a>
-                <a href="#" className="btn btn-outline-secondary btn-black text-uppercase filter-btn m-2" data-filter="cupcakes" onClick={(e) => {filterItems(e)}}>cupcakes</a>
-                <a href="#" className="btn btn-outline-secondary btn-black text-uppercase filter-btn m-2" data-filter="sweets" onClick={(e) => {filterItems(e)}}>sweets</a>
-                <a href="#" className="btn btn-outline-secondary btn-black text-uppercase filter-btn m-2" data-filter="doughnuts" onClick={(e) => {filterItems(e)}}>doughnuts</a>
+                <span className="btn btn-outline-secondary btn-black text-uppercase filter-btn m-2" data-filter="all" onClick={(e) => {filterItems(e)}}> all</span>
+                {
+                  uniqueItems.map(item => {
+                    return <span key={item} className="btn btn-outline-secondary btn-black text-uppercase filter-btn m-2" data-filter={item} onClick={(e) => {filterItems(e)}}>{item}</span>
+                  })
+                }
               </div>
             </div>
             <div className="row">

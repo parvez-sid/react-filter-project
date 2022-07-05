@@ -90,37 +90,67 @@ const dataItems = [
     price: 15,
   }
 ];
-
+let cartItems = []
 const Home = () => {
-  const [items, setItems] = useState([]);
+    const [items, setItems] = useState([]);
+    const [cartCount, setCartCount] = useState(0);
 
     useEffect(() => {
       setItems(dataItems)
     }, [])
 
+    // distinct items
+    const uniqueItems = [...new Set(dataItems.map(item => item.type))];
+
+    // filter items
     const filterItems = (event) => {
         const filter = event.target.dataset && event.target.dataset.filter;
         const filteredItems = filter === "all" ? dataItems : dataItems.filter((item) => item.type === filter);
         setItems(filteredItems)
     };
 
+    // search item by keyword
     const searchItems = () => {
         const value = document.getElementById("search-item").value
-        value.toLowerCase().trim()
+        value.toLowerCase().trim();
 
-        let filteredItems = dataItems.filter((item) => item.type.includes(value));
         if(value === "") {
           alert('Please write something to search...')
         }
+
+        let filteredItems = dataItems.filter((item) => item.type.includes(value));
         setItems(filteredItems)
     }
-    
+
+    const addToCart = (price) => {
+      cartItems.push(price)
+      setCartCount(cartItems.length)
+    }
+
+    const displayCartItems = () => {
+      let totalPrice = cartItems.reduce((curr, price) => {
+         return curr + price
+      },0)
+      return totalPrice
+     }
+     
+    const cartData = {
+      count : cartCount,
+      displayCart: displayCartItems
+    }
+
     return(
         <>
-          <Header />
+          <Header cartData={cartData} />
           <Banner />
           <About />
-          <Products dataItems={items} filterItems={filterItems} searchItems={searchItems} />
+          <Products
+            uniqueItems={uniqueItems}
+            dataItems={items}
+            filterItems={filterItems}
+            searchItems={searchItems}
+            addToCart={addToCart}
+          />
         </>
     )
 }

@@ -10,7 +10,7 @@ import React from "react";
               <div className="card ">
                   <div className="img-container">
                   <img src={require(`../assets/img/${item.image}`)} className="card-img-top store-img" alt="" />
-                  <span className="store-item-icon" onClick={() => {addToCart(item.price)}}>
+                  <span className="store-item-icon" onClick={() => {addToCart(item)}}>
                       <i className="fas fa-shopping-cart"></i>
                   </span>
                   </div>

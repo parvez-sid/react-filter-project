@@ -1,6 +1,7 @@
 import './App.css';
 
 import Home from './pages/Home';
+import Cart from './pages/CartLanding';
 
 import {
   BrowserRouter as Router,
@@ -14,6 +15,7 @@ function App() {
       <Router>
         <Routes>
           <Route path='/' element={<Home />} />
+          <Route path='/cart' element={<Cart />} />
         </Routes>
       </Router>
     </div>

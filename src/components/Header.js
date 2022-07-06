@@ -1,15 +1,20 @@
 import React from "react";
 import logo from '../assets/img/logo.svg'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { scroll } from '../utilities/Utility'
 
 const Header = ({ cartData }) => {
 
-    const scroll = (e, id) => {
-        e.preventDefault()
-        const element = document.getElementById(id);
-        element.scrollIntoView( { behavior: 'smooth', block: 'start' } );
-    };
+    let totalPrice = 0;
+    totalPrice = cartData.reduce((curr, item) => {
+        return curr + item.price
+    },0);
 
+    const navigate = useNavigate();
+
+    const redirectToCartLanding = (cart) => {
+        navigate('/cart', {state : cart})
+    }
     return(
         <nav className="navbar navbar-expand-lg px-4">
         <Link className="navbar-brand" to={"/"}><img src={logo} alt="" /></Link>
@@ -35,14 +40,27 @@ const Header = ({ cartData }) => {
                 <p className="mb-0">+91-8090980909</p>
             </div>
 
-            <div id="cart-info" className="nav-info align-items-center cart-info d-flex justify-content-between mx-lg-5">
-                <span className="cart-info__icon mr-lg-3"><i className="fas fa-shopping-cart"></i></span>
-                <p className="mb-0 text-capitalize"><span id="item-count">
-                    {cartData && cartData.count} </span> items - $<span className="item-total">
-                        {cartData && cartData.displayCart()}
-                        </span>
-                </p>
-            </div>
+            {cartData.length ?
+                <div id="cart-info" className="nav-info align-items-center cart-info d-flex justify-content-between mx-lg-5" onClick={() => {redirectToCartLanding(cartData)}}>
+                    <span className="cart-info__icon mr-lg-3"><i className="fas fa-shopping-cart"></i></span>
+                    <p className="mb-0 text-capitalize">
+                        <span id="item-count"> {cartData && cartData.length} </span>
+                        {cartData.length > 1 ? "items" : "item"} - $<span className="item-total">
+                            {totalPrice}
+                    </span>
+                    </p>
+                </div>
+            :
+                <div id="cart-info" className="nav-info align-items-center cart-info d-flex justify-content-between mx-lg-5">
+                    <span className="cart-info__icon mr-lg-3"><i className="fas fa-shopping-cart"></i></span>
+                    <p className="mb-0 text-capitalize">
+                        <span id="item-count"> {cartData && cartData.length} </span>
+                        {cartData.length > 1 ? "items" : "item"} - $<span className="item-total">
+                            {totalPrice}
+                    </span>
+                    </p>
+                </div>
+            }
 
             </div>
         </div>

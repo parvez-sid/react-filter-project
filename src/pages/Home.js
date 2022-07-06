@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import Banner from "../components/Banner";
 import About from "./About";
 import Products from "./Products";
-import Swal from 'sweetalert2';
+import { sweetErrAlert } from '../utilities/Utility';
 
 const dataItems = [
   {
@@ -92,11 +92,9 @@ const dataItems = [
   }
 ];
 
-let cartItems = []
-
 const Home = () => {
     const [items, setItems] = useState([]);
-    const [cartCount, setCartCount] = useState(0);
+    const [cartItems, setCartItem] = useState([]);
 
     useEffect(() => {
       setItems(dataItems)
@@ -107,6 +105,7 @@ const Home = () => {
 
     // filter items
     const filterItems = (event) => {
+        event.preventDefault()
         const filter = event.target.dataset && event.target.dataset.filter;
         const filteredItems = filter === "all" ? dataItems : dataItems.filter((item) => item.type === filter);
         setItems(filteredItems)
@@ -126,34 +125,13 @@ const Home = () => {
         setItems(filteredItems)
     }
 
-    const addToCart = (price) => {
-      cartItems.push(price)
-      setCartCount(cartItems.length)
+    const addToCart = (item) => {
+      setCartItem([...cartItems, item])
     }
-
-    const displayCartPrice = () => {
-      let totalPrice = cartItems.reduce((curr, price) => {
-         return curr + price
-      },0)
-      return totalPrice
-    }
-     
-    const cartData = {
-      count : cartCount,
-      displayCart: displayCartPrice
-    }
-
-    const sweetErrAlert = (errText, cnfText) => {
-      Swal.fire({
-        title: 'Error!',
-        text: errText,
-        icon: 'error',
-        confirmButtonText: cnfText
-      })
-    }
+    
     return(
         <>
-          <Header cartData={cartData} />
+          <Header cartData={cartItems} />
           <Banner />
           <About />
           <Products

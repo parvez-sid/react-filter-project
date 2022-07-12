@@ -94,7 +94,7 @@ const dataItems = [
 
 const Home = () => {
     const [items, setItems] = useState([]);
-    const [cartItems, setCartItem] = useState([]);
+    const [cartItems, setCartItems] = useState([]);
 
     useEffect(() => {
       setItems(dataItems)
@@ -126,12 +126,17 @@ const Home = () => {
     }
 
     const addToCart = (item) => {
-      setCartItem([...cartItems, item])
+      setCartItems([...cartItems, item])
+    }
+
+    const removeCartItems = (id) => {
+      const items = cartItems.filter((item) => item.id !== id);
+      setCartItems(items)
     }
     
     return(
         <>
-          <Header cartData={cartItems} />
+          <Header cartData={cartItems} onRemoveCartItems={removeCartItems} />
           <Banner />
           <About />
           <Products

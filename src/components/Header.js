@@ -1,6 +1,6 @@
 import React from "react";
 import logo from '../assets/img/logo.svg'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { scroll } from '../utilities/Utility'
 
 const Header = ({ cartData, onRemoveCartItems }) => {
@@ -18,11 +18,11 @@ const Header = ({ cartData, onRemoveCartItems }) => {
         return curr + item.price
     },0);
 
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
-    // const redirectToCartLanding = (cart) => {
-    //     navigate('/cart', {state : cart})
-    // }
+    const CheckoutLanding = (cart) => {
+        navigate('/checkout', {state : cart})
+    }
 
     const displayCartItems = () => {
         return cartData.map((cart) => {
@@ -98,8 +98,8 @@ const Header = ({ cartData, onRemoveCartItems }) => {
                     </div>
 
                     <div className="cart-buttons-container mt-3 d-flex justify-content-between">
-                        <a href="#d" id="clear-cart" className="btn btn-outline-secondary btn-black text-uppercase">clear cart</a>
-                        <a href="#d" className="btn btn-outline-secondary text-uppercase btn-pink">checkout</a>
+                        <span id="clear-cart" className="btn btn-outline-secondary btn-black text-uppercase">clear cart</span>
+                        <span className="btn btn-outline-secondary text-uppercase btn-pink" onClick={() => {CheckoutLanding(cartData)}}>checkout</span>
                     </div>
                 </div>
 

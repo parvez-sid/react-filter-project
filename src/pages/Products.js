@@ -1,10 +1,17 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
-    const Products = ({uniqueItems, dataItems, filterItems, searchItems, addToCart}) => {
+    const Products = ({uniqueItems, filterItems, searchItems, addToCart}) => {
+
+    const { products } = useSelector((store) => {
+      return {
+        products: store.product.products
+      }
+    })
 
     const renderItems = () => {
       return (
-        dataItems.map((item) => {
+        products.map((item) => {
           return(
             <div key={item.id} className="col-10 col-sm-6 col-lg-4 mx-auto my-3 store-item sweets" data-item="sweets">
               <div className="card ">

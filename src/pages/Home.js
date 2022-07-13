@@ -4,7 +4,6 @@ import Header from "../components/Header";
 import Banner from "../components/Banner";
 import About from "./About";
 import Products from "./Products";
-import { sweetErrAlert } from '../utilities/Utility';
 import { setProducts, filterProducts, searchProducts} from "../store/actions/products";
 import { dataItems } from "../json/data"
 
@@ -24,22 +23,14 @@ const Home = () => {
     const filterItems = (event) => {
         event.preventDefault()
         const filter = event.target.dataset && event.target.dataset.filter;
-        const filteredItems = filter === "all" ? dataItems : dataItems.filter((item) => item.type === filter);
-        dispatch(filterProducts(filteredItems))
+        dispatch(filterProducts(dataItems, filter))
     };
 
     // search item by keyword
     const searchItems = () => {
         const value = document.getElementById("search-item").value
         value.toLowerCase().trim();
-
-        if(value === "") {
-          sweetErrAlert('Please write something to search...', 'Ok')
-        }
-
-        let filteredItems = dataItems.filter((item) => item.type.includes(value));
-        if(filteredItems.length === 0) {sweetErrAlert('No items to show with this keyword!', 'Ok')}
-        dispatch(searchProducts(filteredItems))
+        dispatch(searchProducts(dataItems, value))
     }
 
     const addToCart = (item) => {

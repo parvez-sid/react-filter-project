@@ -1,9 +1,10 @@
 import {
-    SET_PRODUCTS, FILTER_PRODUCTS, SEARCH_PRODUCTS
+    SET_PRODUCTS, FILTER_PRODUCTS, SEARCH_PRODUCTS , ADD_TO_CART
 } from "../constants"
 
 const initialState = {
-    products:[]
+    products:[],
+    carts: []
 }
 
 const productReducer = (state = initialState, action) => {
@@ -12,17 +13,26 @@ const productReducer = (state = initialState, action) => {
 
         case SET_PRODUCTS: {
             return {
-              products: action.payload
+                ...state,
+                products: action.payload
             }
         }
         case FILTER_PRODUCTS : {
             return {
+                ...state,
                 products : action.payload
             }
         }
         case SEARCH_PRODUCTS: {
             return {
+                ...state,
                 products: action.payload
+            }
+        }
+        case ADD_TO_CART: {
+            return {
+                ...state,
+                carts: [...state.carts, action.payload]
             }
         }
         default: {

@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
     const Products = ({uniqueItems, filterItems, searchItems, addToCart}) => {
-
+    const [search, setSearch] = useState('');
     const { products } = useSelector((store) => {
       return {
         products: store.product.products
@@ -57,10 +57,14 @@ import { useSelector } from "react-redux";
               <div className="col-10 mx-auto col-md-6">
                 <form>
                   <div className="input-group mb-3">
-                    <div className="input-group-prepend" style={{cursor : "pointer"}} onClick={() => {searchItems()}} >
+                    <div className="input-group-prepend" style={{cursor : "pointer"}} onClick={() => {searchItems(search)}} >
                       <span className="input-group-text search-box" id="search-icon"><i className="fas fa-search"></i></span>
                     </div>
-                    <input type="text" className="form-control" placeholder='item....' id="search-item" />
+                    <input type="text" className="form-control" placeholder='item....' id="search-item" onChange={(e) => {{
+                      e.preventDefault();
+                      setSearch(e.target.value)
+                      searchItems(e.target.value)
+                    }}} />
                   </div>
                 </form>
               </div>

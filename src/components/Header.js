@@ -1,12 +1,20 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import logo from '../assets/img/logo.svg'
 import { Link, useNavigate } from "react-router-dom";
 import { scroll } from '../utilities/Utility'
 
-const Header = ({ cartData }) => {
+const Header = ({}) => {
 
+    const { carts } = useSelector((store) => {
+        return {
+          carts: store.product.carts
+        }
+    })
+
+    console.log("carts",carts);
     let totalPrice = 0;
-    totalPrice = cartData.reduce((curr, item) => {
+    totalPrice = carts.reduce((curr, item) => {
         return curr + item.price
     },0);
 
@@ -15,6 +23,7 @@ const Header = ({ cartData }) => {
     const redirectToCartLanding = (cart) => {
         navigate('/cart', {state : cart})
     }
+
     return(
         <nav className="navbar navbar-expand-lg px-4">
         <Link className="navbar-brand" to={"/"}><img src={logo} alt="" /></Link>
@@ -40,12 +49,12 @@ const Header = ({ cartData }) => {
                 <p className="mb-0">+91-8090980909</p>
             </div>
 
-            {cartData.length ?
-                <div id="cart-info" className="nav-info align-items-center cart-info d-flex justify-content-between mx-lg-5" onClick={() => {redirectToCartLanding(cartData)}}>
+            {carts.length ?
+                <div id="cart-info" className="nav-info align-items-center cart-info d-flex justify-content-between mx-lg-5" onClick={() => {redirectToCartLanding(carts)}}>
                     <span className="cart-info__icon mr-lg-3"><i className="fas fa-shopping-cart"></i></span>
                     <p className="mb-0 text-capitalize">
-                        <span id="item-count"> {cartData && cartData.length} </span>
-                        {cartData.length > 1 ? "items" : "item"} - $<span className="item-total">
+                        <span id="item-count"> {carts && carts.length} </span>
+                        {carts.length > 1 ? "items" : "item"} - $<span className="item-total">
                             {totalPrice}
                     </span>
                     </p>
@@ -54,8 +63,8 @@ const Header = ({ cartData }) => {
                 <div id="cart-info" className="nav-info align-items-center cart-info d-flex justify-content-between mx-lg-5">
                     <span className="cart-info__icon mr-lg-3"><i className="fas fa-shopping-cart"></i></span>
                     <p className="mb-0 text-capitalize">
-                        <span id="item-count"> {cartData && cartData.length} </span>
-                        {cartData.length > 1 ? "items" : "item"} - $<span className="item-total">
+                        <span id="item-count"> {carts && carts.length} </span>
+                        {carts.length > 1 ? "items" : "item"} - $<span className="item-total">
                             {totalPrice}
                     </span>
                     </p>

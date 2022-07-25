@@ -1,4 +1,4 @@
-import { SET_PRODUCTS, FILTER_PRODUCTS, SEARCH_PRODUCTS } from "../constants";
+import { SET_PRODUCTS, FILTER_PRODUCTS, SEARCH_PRODUCTS, ADD_TO_CART } from "../constants";
 import {sweetErrAlert} from '../../utilities/Utility';
 
 const setProducts = (data) => (dispatch) => {
@@ -9,7 +9,7 @@ const setProducts = (data) => (dispatch) => {
             payload: data
         })
     } catch (error) {
-        console.log(err);
+        console.log(error);
     }
 }
 
@@ -30,10 +30,6 @@ const filterProducts = (items, filter) => (dispatch) => {
 
 const searchProducts = (items, value) => (dispatch) => {
     try {
-        if(value === "") {
-            sweetErrAlert('Please write something to search...', 'Ok')
-        }
-    
         const searchedItems = items.filter((item) => item.type.includes(value));
         if(searchedItems.length === 0) {sweetErrAlert('No items to show with this keyword!', 'Ok')}
         const action = {
@@ -42,12 +38,23 @@ const searchProducts = (items, value) => (dispatch) => {
         }
         dispatch(action)
     } catch (error) {
-        console.log(err);
+        console.log(error);
+    }
+}
+const addToCart = (item) => (dispatch) => {
+    try {
+        dispatch({
+            type: ADD_TO_CART,
+            payload : item
+        })
+    } catch (error) {
+        console.log(error);
     }
 }
 
 export {
     setProducts,
     filterProducts,
-    searchProducts
+    searchProducts,
+    addToCart
 }

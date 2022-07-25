@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux"
 import Header from "../components/Header";
 import Banner from "../components/Banner";
 import About from "./About";
 import Products from "./Products";
-import { setProducts, filterProducts, searchProducts} from "../store/actions/products";
+import {sweetErrAlert} from '../utilities/Utility';
+import { setProducts, filterProducts, searchProducts, addToCart} from "../store/actions/products";
 import { dataItems } from "../json/data"
 
 const Home = () => {
 
     const dispatch = useDispatch();
-    const [cartItems, setCartItem] = useState([]);
 
     useEffect(() => {
       dispatch(setProducts(dataItems))
@@ -27,26 +27,28 @@ const Home = () => {
     };
 
     // search item by keyword
-    const searchItems = () => {
-        const value = document.getElementById("search-item").value
+    const searchItems = (value) => {
         value.toLowerCase().trim();
+        if(value === "") {
+          sweetErrAlert('Please write something to search...', 'Ok')
+        }
         dispatch(searchProducts(dataItems, value))
     }
 
-    const addToCart = (item) => {
-      setCartItem([...cartItems, item])
+    const addItemToCart = (item) => {
+      dispatch(addToCart(item))
     }
     
     return(
         <>
-          <Header cartData={cartItems} />
+          <Header />
           <Banner />
           <About />
           <Products
             uniqueItems={uniqueItems}
             filterItems={filterItems}
             searchItems={searchItems}
-            addToCart={addToCart}
+            addToCart={addItemToCart}
           />
         </>
     )

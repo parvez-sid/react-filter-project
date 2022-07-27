@@ -5,7 +5,7 @@ import Banner from "../components/Banner";
 import About from "./About";
 import Products from "./Products";
 import {sweetErrAlert} from '../utilities/Utility';
-import { setProducts, filterProducts, searchProducts, addToCart} from "../store/actions/products";
+import { setProducts, filterProducts, searchProducts, addToCart, removeCartItem} from "../store/actions/products";
 import { dataItems } from "../json/data"
 
 const Home = () => {
@@ -38,10 +38,14 @@ const Home = () => {
     const addItemToCart = (item) => {
       dispatch(addToCart(item))
     }
+
+    const onRemoveCartItems = (carts, id) => {
+      dispatch(removeCartItem(carts, id))
+    }
     
     return(
         <>
-          <Header />
+          <Header onRemoveCartItems={onRemoveCartItems} />
           <Banner />
           <About />
           <Products

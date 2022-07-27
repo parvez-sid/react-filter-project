@@ -1,4 +1,5 @@
-import { SET_PRODUCTS, FILTER_PRODUCTS, SEARCH_PRODUCTS, ADD_TO_CART } from "../constants";
+import { SET_PRODUCTS, FILTER_PRODUCTS, SEARCH_PRODUCTS, ADD_TO_CART, REMOVE_CART, CHECKOUT_DATA } 
+from "../constants";
 import {sweetErrAlert} from '../../utilities/Utility';
 
 const setProducts = (data) => (dispatch) => {
@@ -51,10 +52,33 @@ const addToCart = (item) => (dispatch) => {
         console.log(error);
     }
 }
+const removeCartItem = (cartItems, id) => (dispatch) => {
+    const remainingItems = cartItems.filter((item) => item.id !== id);
 
+    try {
+        dispatch({
+            type: REMOVE_CART,
+            payload : remainingItems
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
+const proceedToCheckout = (cartItems) => (dispatch) => {
+    try {
+        dispatch({
+            type: CHECKOUT_DATA,
+            payload : cartItems
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
 export {
     setProducts,
     filterProducts,
     searchProducts,
-    addToCart
+    addToCart,
+    removeCartItem,
+    proceedToCheckout
 }

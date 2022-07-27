@@ -1,8 +1,9 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import logo from '../assets/img/logo.svg'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { scroll } from '../utilities/Utility'
+import { proceedToCheckout } from "../store/actions/products";
 
 const Header = ({ onRemoveCartItems }) => {
 
@@ -12,9 +13,10 @@ const Header = ({ onRemoveCartItems }) => {
         }
     })
 
+    const dispatch = useDispatch();
+
     const displayCartItems = () => {
         return carts.map((cart) => {
-            console.log("cart ==> ", cart)
           return <div className="cart-item d-flex justify-content-between text-capitalize my-3" key={cart.id}>
           <img src={require(`../assets/img/${cart.image}`)} className="img-fluid" id="item-img" alt={cart.title} width="80" />
           <div className="item-text">
@@ -22,7 +24,7 @@ const Header = ({ onRemoveCartItems }) => {
             <p id="cart-item-title" className="font-weight-bold mb-0">{cart.title}</p>
             <p id="cart-item-price" className="mb-0">{cart.price}</p>
           </div>
-          <a href="#" id='cart-item-remove' className="cart-item-remove" onClick={(e)=> {{
+          <a href="!#" id='cart-item-remove' className="cart-item-remove" onClick={(e)=> {{
             e.preventDefault();
             onRemoveCartItems(carts, cart.id);
           }
@@ -44,6 +46,13 @@ const Header = ({ onRemoveCartItems }) => {
         }
         const element = document.getElementById("cart");
         element.classList.toggle("showCart");
+    }
+
+    const navigate = useNavigate();
+
+    const CheckoutLanding = (cart) => {
+        dispatch(proceedToCheckout(carts))
+        navigate('/checkout', {state : cart})
     }
 
     return(
@@ -102,7 +111,7 @@ const Header = ({ onRemoveCartItems }) => {
 
                 <div className="cart-buttons-container mt-3 d-flex justify-content-between">
                     <span id="clear-cart" className="btn btn-outline-secondary btn-black text-uppercase">clear cart</span>
-                    <span className="btn btn-outline-secondary text-uppercase btn-pink">checkout</span>
+                    <span className="btn btn-outline-secondary text-uppercase btn-pink" onClick={() => {CheckoutLanding(carts)}}>checkout</span>
                 </div>
             </div>
             </div>

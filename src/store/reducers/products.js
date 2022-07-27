@@ -14,18 +14,8 @@ const productReducer = (state = initialState, action) => {
 
     switch(action.type) {
 
-        case SET_PRODUCTS: {
-            return {
-                ...state,
-                products: action.payload
-            }
-        }
-        case FILTER_PRODUCTS : {
-            return {
-                ...state,
-                products : action.payload
-            }
-        }
+        case SET_PRODUCTS:
+        case FILTER_PRODUCTS:
         case SEARCH_PRODUCTS: {
             return {
                 ...state,
@@ -38,12 +28,7 @@ const productReducer = (state = initialState, action) => {
                 carts: [...state.carts, action.payload]
             }
         }
-        case REMOVE_CART: {
-            return {
-                ...state,
-                carts: action.payload
-            }
-        }
+        case REMOVE_CART:
         case CHECKOUT_DATA: {
             return {
                 ...state,
